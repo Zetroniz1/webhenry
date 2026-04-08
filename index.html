@@ -2,46 +2,46 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebHenry</title>
+    <title>Henry</title>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #000;
-        }
-        #ruffle-container {
-            width: 100%;
-            height: 100%;
-        }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
+        #container { width: 100vw; height: 100vh; }
     </style>
 </head>
 <body>
-
-    <div id="ruffle-container"></div>
+    <div id="container"></div>
 
     <script src="https://unpkg.com"></script>
-    
+
     <script>
         window.RufflePlayer = window.RufflePlayer || {};
-        window.addEventListener("DOMContentLoaded", () => {
+        
+        window.addEventListener("load", async (event) => {
             const ruffle = window.RufflePlayer.newest();
-            const player = ruffle.createPlayer();
-            const container = document.getElementById("ruffle-container");
-            container.appendChild(player);
+            
+            if (!ruffle) {
+                console.log("Ruffle еще не готов, пробуем снова...");
+                return;
+            }
 
-            player.load({
-                url: "https://archive.org/download/stickmin-flash-game-series./665992_complex.swf",
-                autoplay: "on",
-                unmuteOnStart: true,
-                letterbox: "on"
-            });
+            const player = ruffle.createPlayer();
+            const container = document.getElementById("container");
+            container.appendChild(player);
 
             player.style.width = "100%";
             player.style.height = "100%";
+
+            try {
+                await player.load({
+                    url: "https://archive.org/download/stickmin-flash-game-series./665992_complex.swf",
+                    autoplay: "on",
+                    unmuteOnStart: true,
+                    allowScriptAccess: true
+                });
+                console.log("Игра успешно загружена!");
+            } catch (err) {
+                console.error("Ошибка загрузки SWF:", err);
+            }
         });
     </script>
 </body>
