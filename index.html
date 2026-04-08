@@ -2,50 +2,56 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Henry Stickman - Fullscreen</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
-        #ruffle-container { width: 100vw; height: 100vh; }
+        body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background-color: #000; }
+        #container { width: 100%; height: 100%; }
     </style>
 </head>
 <body>
-    <div id="ruffle-container"></div>
+    <div id="container"></div>
 
-    <script src="https://unpkg.com"></script>
+    <script src="https://jsdelivr.net"></script>
 
     <script>
-        window.RufflePlayer = window.RufflePlayer || {};
+        const swfUrl = "https://archive.org";
 
-        const loadGame = () => {
-            const ruffle = window.RufflePlayer.newest();
-            if (!ruffle) {
-                console.log("Ruffle еще не готов, ждем...");
-                return false; 
+        async function initRuffle() {
+
+            const RufflePlayer = window.RufflePlayer || {};
+            
+            if (!RufflePlayer.newest) {
+                console.log("Ожидание инициализации Ruffle...");
+                setTimeout(initRuffle, 200);
+                return;
             }
 
+            const ruffle = RufflePlayer.newest();
             const player = ruffle.createPlayer();
-            const container = document.getElementById("ruffle-container");
+            const container = document.getElementById("container");
             container.appendChild(player);
-
-            player.load({
-                url: "https://archive.org/download/stickmin-flash-game-series./665992_complex.swf",
-                autoplay: "on",
-                unmuteOnStart: true,
-                letterbox: "on"
-            });
 
             player.style.width = "100%";
             player.style.height = "100%";
-            return true;
-        };
 
-        const checkRuffle = setInterval(() => {
-            if (loadGame()) {
-                clearInterval(checkRuffle);
-                console.log("Ruffle успешно запущен!");
+            try {
+                await player.load({
+                    url: swfUrl,
+                    autoplay: "on",
+                    unmuteOnStart: true,
+                    allowScriptAccess: true
+                });
+                console.log("Игра загружена!");
+            } catch (err) {
+                console.error("Ошибка при загрузке SWF:", err);
+
+                alert("Ошибка загрузки!");
             }
-        }, 100);
+        }
+
+        window.addEventListener("load", () => {
+            setTimeout(initRuffle, 500);
+        });
     </script>
 </body>
 </html>
