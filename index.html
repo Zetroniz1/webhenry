@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Henry stickmin web</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+        #container {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container"></div>
+    <script src="https://unpkg.com"></script>
+    
+    <script>
+        window.RufflePlayer = window.RufflePlayer || {};
+        window.addEventListener("load", (event) => {
+            const ruffle = window.RufflePlayer.newest();
+            const player = ruffle.createPlayer();
+            const container = document.getElementById("container");
+            container.appendChild(player);
+
+            player.load({
+                url: "https://archive.org/download/stickmin-flash-game-series./665992_complex.swf",
+                allowScriptAccess: true,
+                backgroundColor: "#000000"
+            });
+
+            player.style.width = "100%";
+            player.style.height = "100%";
+        });
+    </script>
+</body>
+</html>
