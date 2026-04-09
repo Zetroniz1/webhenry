@@ -2,33 +2,59 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Henry Stickman</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Henry stickman</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
-        #container { width: 100vw; height: 100vh; }
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .btn-link {
+            display: block;
+            padding: 15px 25px;
+            text-align: center;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-link:hover {
+            background-color: #333;
+            border-color: #4caf50;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 <body>
-    <div id="container"></div>
 
-    <script src="ruffle.js"></script>
+    <div class="button-container">
+        <a href="btb.html" class="btn-link">Breaking the bank</a>
+        <a href="efp.html" class="btn-link">Escaping from Prison</a>
+        <a href="std.html" class="btn-link">Stealing the diamond</a>
+        <a href="ita.html" class="btn-link">Infiltrating the airship</a>
+        <a href="ftc.html" class="btn-link">Fleeing the complex</a>
+    </div>
 
-    <script>
-        window.addEventListener("load", () => {
-            const ruffle = window.RufflePlayer.newest();
-            const player = ruffle.createPlayer();
-            const container = document.getElementById("container");
-            container.appendChild(player);
-
-            player.load({
-                url: "https://archive.org/download/stickmin-flash-game-series./665992_complex.swf",
-                autoplay: "on",
-                unmuteOnStart: true
-            });
-
-            player.style.width = "100%";
-            player.style.height = "100%";
-        });
-    </script>
 </body>
 </html>
